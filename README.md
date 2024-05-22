@@ -1,4 +1,3 @@
-# frontend
 # Function Frontend
 
 This Solidity program is a simple implementation of 2 or 3 functions to the front end and showing the values of those functions.
