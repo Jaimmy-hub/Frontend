@@ -1,13 +1,13 @@
-Function Frontend
+#Function Frontend
 This Solidity program is a simple implementation of 2 or 3 functions to the front end and showing the values of those functions.
 
-Description
+#Description
 This program is a Smart Contract written in Solidity and Java, a programming language used for developing smart contracts on the Ethereum blockchain. The project needs a 2 or 3 function in frontend. This program serves as functions and Errors - ETH + AVAX to advance on the next module.
 
 Use this as guidance in executing the program and all files you need are here https://github.com/MetacrafterChris/SCM-Starter. ~Credits Sir Chris
 
-Getting Started
-Executing program
+#Getting Started
+#Executing program
 To run this program, you can use VS Code, An application used on many varies. To get started, download VS Code and install on your computer.
 
 Once you've dowloaded the VS Code download the starter pack and open it in your VS Code.
@@ -214,8 +214,8 @@ To open the index js, you have to follow the "Starter Next/Hardhat Project" or "
 
 The function that i added are the History Transactions, everytime you deposit it will bump to history transaction like a database right?,
 
-Authors
+#Authors
 Metacrafter Jaimmy
 
-License
+#License
 This project is licensed under the MIT License - see the LICENSE.md file for details
