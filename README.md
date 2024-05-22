@@ -30,6 +30,8 @@ export default function HomePage() {
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
   const [transactionHistory, setTransactionHistory] = useState([]);
+  const [depositAmount, setDepositAmount] = useState('');
+  const [withdrawAmount, setWithdrawAmount] = useState('');
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
@@ -81,21 +83,21 @@ export default function HomePage() {
     }
   };
 
-  const deposit = async () => {
-    if (atm) {
-      let tx = await atm.deposit(1);
+  const deposit = async (amount) => {
+    if (atm && amount > 0) {
+      let tx = await atm.deposit(amount);
       await tx.wait();
       getBalance();
-      updateTransactionHistory("Deposit", 1);
+      updateTransactionHistory("Deposit", amount);
     }
   };
 
-  const withdraw = async () => {
-    if (atm) {
-      let tx = await atm.withdraw(1);
+  const withdraw = async (amount) => {
+    if (atm && amount > 0) {
+      let tx = await atm.withdraw(amount);
       await tx.wait();
       getBalance();
-      updateTransactionHistory("Withdraw", -1);
+      updateTransactionHistory("Withdraw", -amount);
     }
   };
 
@@ -107,6 +109,14 @@ export default function HomePage() {
     };
     const newTransactionHistory = [...transactionHistory, newTransaction];
     setTransactionHistory(newTransactionHistory);
+  };
+
+  const getLastFiveTransactions = () => {
+    return transactionHistory.slice(-5).reverse();
+  };
+
+  const resetTransactionHistory = () => {
+    setTransactionHistory([]);
   };
 
   const initUser = () => {
@@ -127,9 +137,25 @@ export default function HomePage() {
     return (
       <div>
         <p>Your Account: {account}</p>
-        <p>Your Balance: {balance}</p>
-        <button onClick={deposit}>Deposit 1 ETH</button>
-        <button onClick={withdraw}>Withdraw 1 ETH</button>
+        <p>Your Balance: {balance} ETH</p>
+        <div>
+          <input
+            type="number"
+            placeholder="Enter amount to deposit"
+            value={depositAmount}
+            onChange={(e) => setDepositAmount(e.target.value)}
+          />
+          <button onClick={() => deposit(Number(depositAmount))}>Deposit ETH</button>
+        </div>
+        <div>
+          <input
+            type="number"
+            placeholder="Enter amount to withdraw"
+            value={withdrawAmount}
+            onChange={(e) => setWithdrawAmount(e.target.value)}
+          />
+          <button onClick={() => withdraw(Number(withdrawAmount))}>Withdraw ETH</button>
+        </div>
         <div>
           <h3>Transaction History:</h3>
           <ul>
@@ -140,6 +166,17 @@ export default function HomePage() {
             ))}
           </ul>
         </div>
+        <div>
+          <h3>Last 5 Transactions:</h3>
+          <ul>
+            {getLastFiveTransactions().map((transaction, index) => (
+              <li key={index}>
+                {transaction.action} {Math.abs(transaction.amount)} ETH - {transaction.timestamp}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <button onClick={resetTransactionHistory}>Reset Transaction History</button>
       </div>
     );
   };
@@ -158,10 +195,29 @@ export default function HomePage() {
         .container {
           text-align: center;
         }
+        input {
+          margin: 10px;
+          padding: 5px;
+          font-size: 1em;
+        }
+        button {
+          margin: 10px;
+          padding: 10px 20px;
+          font-size: 1em;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: #45a049;
+        }
       `}</style>
     </main>
   );
 }
+  
 
 ```
 
